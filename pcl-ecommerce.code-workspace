@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../uploads"
+		},
+		{
+			"path": "../pcl-simple"
+		},
+		{
+			"path": "../pcl-ceramic-lab"
+		}
+	]
+}
