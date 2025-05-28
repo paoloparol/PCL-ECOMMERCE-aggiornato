@@ -1,7 +1,5 @@
-"use client";
-
 import { notFound } from "next/navigation";
-import { ProductCard } from "@/components/product/product-card";
+import CategoryProductList from "@/components/product/category-product-list";
 import { products } from "@/lib/db/products";
 
 // Mappa delle categorie
@@ -47,33 +45,8 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         </div>
 
         {/* Prodotti */}
-        {categoryProducts.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {categoryProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                size="md"
-                withAnimation={true}
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-16">
-            <h2 className="text-2xl font-semibold mb-4">
-              Nessun prodotto trovato
-            </h2>
-            <p className="text-muted-foreground mb-8">
-              Non ci sono prodotti disponibili in questa categoria al momento.
-            </p>
-            <a
-              href="/products"
-              className="btn-humanrace"
-            >
-              Vedi tutti i prodotti
-            </a>
-          </div>
-        )}
+        <CategoryProductList products={categoryProducts} />
+
 
         {/* Breadcrumb */}
         <div className="mt-16 pt-8 border-t">
