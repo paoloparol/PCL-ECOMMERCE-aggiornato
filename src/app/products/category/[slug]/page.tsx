@@ -51,8 +51,12 @@ export default function CategoryPage({ params }: CategoryPageProps) {
         {/* Breadcrumb */}
         <div className="mt-16 pt-8 border-t">
           <nav className="flex items-center space-x-2 text-sm text-muted-foreground">
-            <a href="/" className="hover:text-primary">Home</a>
-            <span>/</span>
+            import Link from "next/link";
+
+<Link href="/products" className="btn-humanrace-outline">
+  Vedi tutti i prodotti
+</Link>
+
             <a href="/products" className="hover:text-primary">Shop</a>
             <span>/</span>
             <span className="text-foreground">{categoryName}</span>

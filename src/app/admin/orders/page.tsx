@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ExclamationTriangleIcon, SearchIcon, FilterIcon } from "lucide-react";
+import { AlertTriangle, SearchIcon, FilterIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -117,13 +117,30 @@ const paymentStatusLabels: Record<string, { label: string; variant: "default" | 
   failed: { label: "Fallito", variant: "destructive" },
   refunded: { label: "Rimborsato", variant: "secondary" }
 };
+interface OrderItem {
+  id: string;
+  name: string;
+  quantity: number;
+  price: number;
+}
+
+interface Order {
+  id: string;
+  customerName: string;
+  customerEmail: string;
+  date: string;
+  total: number;
+  status: string;
+  paymentStatus: string;
+  items: OrderItem[];
+}
 
 export default function AdminOrdersPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [orders, setOrders] = useState<any[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string>("all");
 
@@ -184,7 +201,8 @@ export default function AdminOrdersPage() {
       <div className="container py-16 flex justify-center">
         <div className="w-full max-w-6xl">
           <Alert variant="destructive">
-            <ExclamationTriangleIcon className="h-4 w-4" />
+            <AlertTriangle className="h-6 w-6 text-red-500" />
+
             <AlertTitle>Accesso negato</AlertTitle>
             <AlertDescription>
               Non hai i permessi necessari per accedere a questa pagina.

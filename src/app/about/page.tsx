@@ -134,9 +134,11 @@ export default function AboutPage() {
             Esplora la nostra collezione di ceramiche artigianali uniche
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a href="/products" className="btn-humanrace">
-              Vedi Tutti i Prodotti
-            </a>
+            import Link from "next/link";
+
+<Link href="/products" className="btn-humanrace-outline">
+  Vedi tutti i prodotti
+</Link>
             <a href="/contact" className="btn-humanrace-outline">
               Contattaci
             </a>

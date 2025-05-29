@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ExclamationTriangleIcon, PlusIcon, SearchIcon } from "lucide-react";
+import { AlertTriangle, PlusIcon, SearchIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import {
   Table,
@@ -21,9 +21,8 @@ import Image from "next/image";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { MoreHorizontalIcon } from "lucide-react";
-import { getAllProducts } from "@/lib/db/products";
+import { products } from "@/lib/db/products";
 import type { Product } from "@/types";
-
 export default function AdminProductsPage() {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -91,7 +90,8 @@ export default function AdminProductsPage() {
       <div className="container py-16 flex justify-center">
         <div className="w-full max-w-6xl">
           <Alert variant="destructive">
-            <ExclamationTriangleIcon className="h-4 w-4" />
+            <AlertTriangle className="h-6 w-6 text-red-500" />
+
             <AlertTitle>Accesso negato</AlertTitle>
             <AlertDescription>
               Non hai i permessi necessari per accedere a questa pagina.

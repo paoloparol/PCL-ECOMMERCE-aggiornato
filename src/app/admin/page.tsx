@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ExclamationTriangleIcon, ShoppingCartIcon, PackageIcon, UsersIcon, ReceiptIcon, TagIcon } from "lucide-react";
+import { AlertTriangle , ShoppingCartIcon, PackageIcon, UsersIcon, ReceiptIcon, TagIcon } from "lucide-react";
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
@@ -46,7 +46,8 @@ export default function AdminDashboard() {
       <div className="container py-16 flex justify-center">
         <div className="w-full max-w-6xl">
           <Alert variant="destructive">
-            <ExclamationTriangleIcon className="h-4 w-4" />
+           <AlertTriangle className="h-6 w-6 text-red-500" />
+
             <AlertTitle>Accesso negato</AlertTitle>
             <AlertDescription>
               Non hai i permessi necessari per accedere a questa pagina.

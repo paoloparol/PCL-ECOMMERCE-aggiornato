@@ -17,9 +17,12 @@ export default function CategoryProductList({ products }: Props) {
         <p className="text-muted-foreground mb-8">
           Non ci sono prodotti disponibili in questa categoria al momento.
         </p>
-        <a href="/products" className="btn-humanrace">
-          Vedi tutti i prodotti
-        </a>
+       import Link from "next/link";
+
+<Link href="/products" className="btn-humanrace-outline">
+  Vedi tutti i prodotti
+</Link>
+
       </div>
     );
   }

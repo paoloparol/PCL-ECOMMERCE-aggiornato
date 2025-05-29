@@ -18,7 +18,10 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 export default function ProductPage() {
   const params = useParams();
   const { addItem } = useCartStore();
-
+// Stati per la selezione di colore, taglia e quantità
+  const [selectedColor, setSelectedColor] = useState<ProductColor>(product.colors[0]);
+  const [selectedSize, setSelectedSize] = useState(product.sizes[0]?.value || "");
+  const [quantity, setQuantity] = useState(1);
   // Trova il prodotto in base allo slug nell'URL
   const product = products.find((p) => p.slug === params.slug);
 
@@ -37,10 +40,7 @@ export default function ProductPage() {
     );
   }
 
-  // Stati per la selezione di colore, taglia e quantità
-  const [selectedColor, setSelectedColor] = useState<ProductColor>(product.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0]?.value || "");
-  const [quantity, setQuantity] = useState(1);
+  
 
   // Prodotti correlati (altri prodotti della stessa categoria)
   const relatedProducts = products
