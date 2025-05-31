@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowLeft, Check, Info, Minus, Plus, ShoppingBag } from "lucide-react";
-import { products, Product, type ProductColor } from "@/lib/db/products";
+import { products, type ProductColor } from "@/lib/db/products";
 import { ThreeDDrop } from "@/components/animations/3d-drop";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -18,14 +18,44 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 export default function ProductPage() {
   const params = useParams();
   const { addItem } = useCartStore();
-// Stati per la selezione di colore, taglia e quantità
-  const [selectedColor, setSelectedColor] = useState<ProductColor>(product.colors[0]);
-  const [selectedSize, setSelectedSize] = useState(product.sizes[0]?.value || "");
-  const [quantity, setQuantity] = useState(1);
+
   // Trova il prodotto in base allo slug nell'URL
   const product = products.find((p) => p.slug === params.slug);
 
-  // Se il prodotto non esiste, visualizza un messaggio di errore
+  // Hook SEMPRE chiamati, anche se product è undefined
+  const [selectedColor, setSelectedColor] = useState<ProductColor | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string>("");
+  const [quantity, setQuantity] = useState(1);
+
+  // Inizializza gli state quando product cambia
+  useEffect(() => {
+    if (product) {
+      setSelectedColor(product.colors[0] || null);
+      setSelectedSize(product.sizes[0]?.value || "");
+      setQuantity(1);
+    }
+  }, [product]);
+
+  // Prodotti correlati (altri prodotti della stessa categoria)
+  const relatedProducts = product
+    ? products
+        .filter((p) => p.category === product.category && p.id !== product.id)
+        .slice(0, 4)
+    : [];
+
+  const handleAddToCart = () => {
+    if (!product) return;
+    addItem({
+      id: product.id.toString(),
+      name: product.name,
+      price: product.price,
+      quantity,
+      image: product.images[0],
+      color: selectedColor?.name || "",
+      size: selectedSize,
+    });
+  };
+
   if (!product) {
     return (
       <div className="container-custom py-20 text-center">
@@ -39,25 +69,6 @@ export default function ProductPage() {
       </div>
     );
   }
-
-  
-
-  // Prodotti correlati (altri prodotti della stessa categoria)
-  const relatedProducts = products
-    .filter(p => p.category === product.category && p.id !== product.id)
-    .slice(0, 4);
-
-  const handleAddToCart = () => {
-    addItem({
-      id: product.id.toString(),
-      name: product.name,
-      price: product.price,
-      quantity,
-      image: product.images[0],
-      color: selectedColor?.name || "",
-      size: selectedSize,
-    });
-  };
 
   return (
     <div className="container-custom py-10">
@@ -303,8 +314,8 @@ export default function ProductPage() {
           <Separator className="mb-10" />
           <h2 className="text-2xl font-bold mb-8">Prodotti correlati</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {relatedProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
+            {relatedProducts.map((relatedProduct) => (
+              <ProductCard key={relatedProduct.id} product={relatedProduct} />
             ))}
           </div>
         </div>
